@@ -5,10 +5,10 @@ import {
   Pressable,
   Text,
   StyleSheet,
-  useColorScheme,
 } from "react-native";
 
 import { Category } from "../types/todo";
+import { useTheme } from "../context/ThemeContext";
 import { LightColors, DarkColors } from "../constants/colors";
 
 interface Props {
@@ -18,8 +18,8 @@ interface Props {
 const categories: Category[] = ["Work", "Study", "Personal"];
 
 export default function TodoInput({ onAdd }: Props) {
-  const scheme = useColorScheme();
-  const Colors = scheme === "dark" ? DarkColors : LightColors;
+  const { resolvedTheme } = useTheme();
+  const Colors = resolvedTheme === "dark" ? DarkColors : LightColors;
 
   const [text, setText] = useState("");
   const [category, setCategory] = useState<Category>("Work");
@@ -33,85 +33,66 @@ export default function TodoInput({ onAdd }: Props) {
   const styles = StyleSheet.create({
     input: {
       backgroundColor: Colors.card,
-      borderRadius: 12,
+      borderRadius: 10,
       padding: 14,
       fontSize: 16,
-      marginBottom: 12,
+      marginBottom: 10,
       color: Colors.text,
     },
-    categoryRow: {
+    row: {
       flexDirection: "row",
-      marginBottom: 12,
+      marginBottom: 10,
     },
-    category: {
+    chip: {
       flex: 1,
-      padding: 10,
-      borderRadius: 10,
+      padding: 8,
+      borderRadius: 6,
       alignItems: "center",
       marginHorizontal: 4,
-      borderWidth: 1,
-      borderColor: Colors.muted,
+      backgroundColor: Colors.card,
     },
-    selectedCategory: {
-      backgroundColor: Colors.primary,
-    },
-    categoryText: {
-      color: Colors.text,
-    },
-    selectedText: {
-      color: "#fff",
-      fontWeight: "600",
+    chipSelected: {
+      backgroundColor: Colors.muted,
     },
     addBtn: {
       backgroundColor: Colors.primary,
-      padding: 16,
-      borderRadius: 14,
+      padding: 14,
+      borderRadius: 10,
       alignItems: "center",
     },
     addText: {
-      color: "#fff",
-      fontSize: 16,
-      fontWeight: "700",
+      color: Colors.background,
+      fontWeight: "600",
     },
   });
 
   return (
     <View>
       <TextInput
-        placeholder="Add a new task..."
+        placeholder="New note"
         placeholderTextColor={Colors.muted}
         value={text}
         onChangeText={setText}
         style={styles.input}
       />
 
-      <View style={styles.categoryRow}>
-        {categories.map((cat) => {
-          const selected = cat === category;
-          return (
-            <Pressable
-              key={cat}
-              onPress={() => setCategory(cat)}
-              style={[
-                styles.category,
-                selected && styles.selectedCategory,
-              ]}
-            >
-              <Text
-                style={[
-                  styles.categoryText,
-                  selected && styles.selectedText,
-                ]}
-              >
-                {cat}
-              </Text>
-            </Pressable>
-          );
-        })}
+      <View style={styles.row}>
+        {categories.map((c) => (
+          <Pressable
+            key={c}
+            onPress={() => setCategory(c)}
+            style={[
+              styles.chip,
+              category === c && styles.chipSelected,
+            ]}
+          >
+            <Text>{c}</Text>
+          </Pressable>
+        ))}
       </View>
 
-      <Pressable style={styles.addBtn} onPress={handleAdd}>
-        <Text style={styles.addText}>Add Task</Text>
+      <Pressable onPress={handleAdd} style={styles.addBtn}>
+        <Text style={styles.addText}>Add</Text>
       </Pressable>
     </View>
   );
