@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, useColorScheme } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
 import { useTheme } from "../context/ThemeContext";
 import { LightColors, DarkColors } from "../constants/colors";
 
@@ -7,13 +7,13 @@ export default function FloatingThemeToggle() {
   const Colors =
     resolvedTheme === "dark" ? DarkColors : LightColors;
 
-  function toggleTheme() {
+  function toggle() {
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
   }
 
   return (
     <Pressable
-      onPress={toggleTheme}
+      onPress={toggle}
       style={[
         styles.container,
         { backgroundColor: Colors.card },
@@ -29,26 +29,16 @@ export default function FloatingThemeToggle() {
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    bottom: 24,
+    bottom: 20,
     left: 20,
-
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-
+    width: 42,
+    height: 42,
+    borderRadius: 21,
     alignItems: "center",
     justifyContent: "center",
-
-    // shadow (iOS)
-    shadowColor: "#000",
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 4 },
-
-    // elevation (Android)
-    elevation: 6,
+    opacity: 0.85,
   },
   icon: {
-    fontSize: 22,
+    fontSize: 18,
   },
 });
