@@ -6,7 +6,11 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider>
-        <Stack />
+        <Stack
+          screenOptions={{
+            headerShown: false, // ✅ REMOVE "Index" HEADER
+          }}
+        />
       </ThemeProvider>
     </GestureHandlerRootView>
   );
