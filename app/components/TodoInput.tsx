@@ -58,10 +58,10 @@ export default function TodoInput({ onAdd }: Props) {
       backgroundColor: Colors.primary,
       padding: 14,
       borderRadius: 10,
-      alignItems: "center",
+      alignItems: "center", 
     },
     addText: {
-      color: Colors.background,
+      color: "#000",
       fontWeight: "600",
     },
   });

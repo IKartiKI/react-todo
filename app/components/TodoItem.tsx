@@ -36,6 +36,19 @@ export default function TodoItem({
 
   const isEditing = editingId === todo.id;
 
+  function getCategoryColor() {
+    switch (todo.category) {
+      case "Work":
+        return Colors.work;
+      case "Study":
+        return Colors.study;
+      case "Personal":
+        return Colors.personal;
+      default:
+        return Colors.card;
+    }
+  }
+
   const styles = StyleSheet.create({
     item: {
       backgroundColor: Colors.card,
@@ -43,6 +56,8 @@ export default function TodoItem({
       paddingHorizontal: 16,
       borderRadius: 10,
       marginBottom: 10,
+      borderWidth: 1,
+      borderColor: Colors.border,
     },
     text: {
       fontSize: 16,
@@ -56,24 +71,26 @@ export default function TodoItem({
       fontSize: 16,
       color: Colors.text,
       borderBottomWidth: 1,
-      borderBottomColor: Colors.muted,
+      borderBottomColor: Colors.border,
       paddingVertical: 2,
     },
     badge: {
       marginTop: 6,
       alignSelf: "flex-start",
-      backgroundColor: Colors.muted,
+      backgroundColor: getCategoryColor(),
       paddingHorizontal: 8,
-      paddingVertical: 3,
+      paddingVertical: 4,
       borderRadius: 6,
+      borderWidth: 1,
+      borderColor: Colors.border,
     },
     badgeText: {
       fontSize: 11,
       color: Colors.text,
-      opacity: 0.8,
+      fontWeight: "500",
     },
     deleteBox: {
-      backgroundColor: "#FF3B30",
+      backgroundColor: Colors.primary,
       justifyContent: "center",
       alignItems: "center",
       width: 80,
@@ -81,7 +98,7 @@ export default function TodoItem({
       marginBottom: 10,
     },
     deleteText: {
-      color: "#fff",
+      color: "#000",
       fontWeight: "600",
     },
   });
@@ -108,10 +125,11 @@ export default function TodoItem({
             autoFocus
             onSubmitEditing={() => onSave(todo.id)}
             style={styles.editInput}
+            returnKeyType="done"
           />
         ) : (
           <Text
-            onPress={() => onEdit(todo)}
+            onPress={() => onEdit?.(todo)}
             onLongPress={() => onToggle(todo.id)}
             style={[
               styles.text,

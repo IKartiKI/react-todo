@@ -125,6 +125,11 @@ function saveEdit(id: string) {
                 todo={item}
                 onToggle={toggleTodo}
                 onDelete={deleteTodo}
+                onEdit={startEditing}     // ✅ THIS WAS MISSING
+                onSave={saveEdit}         // ✅ REQUIRED FOR EDIT
+                editingId={editingId}
+                editingText={editingText}
+                setEditingText={setEditingText}
               />
             ) : null
           }

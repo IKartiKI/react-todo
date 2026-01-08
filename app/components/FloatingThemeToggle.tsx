@@ -27,18 +27,16 @@ export default function FloatingThemeToggle() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+ container: {
     position: "absolute",
     bottom: 20,
     left: 20,
-    width: 42,
-    height: 42,
-    borderRadius: 21,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
-    opacity: 0.85,
-  },
-  icon: {
-    fontSize: 18,
-  },
+    backgroundColor: "rgba(255, 214, 10, 0.15)", // yellow tint
+},
+
 });
