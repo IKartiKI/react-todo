@@ -26,6 +26,10 @@ export default function Index() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [loaded, setLoaded] = useState(false);
 
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingText, setEditingText] = useState("");
+
+
   // Load once
   useEffect(() => {
     async function init() {
@@ -63,6 +67,22 @@ export default function Index() {
       )
     );
   }
+
+  function startEditing(todo: Todo) {
+  setEditingId(todo.id);
+  setEditingText(todo.title);
+}
+
+function saveEdit(id: string) {
+  setTodos((prev) =>
+    prev.map((todo) =>
+      todo.id === id ? { ...todo, title: editingText } : todo
+    )
+  );
+  setEditingId(null);
+  setEditingText("");
+}
+
 
   function deleteTodo(id: string) {
     setTodos((prev) => prev.filter((todo) => todo.id !== id));
